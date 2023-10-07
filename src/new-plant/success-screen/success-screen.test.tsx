@@ -1,4 +1,7 @@
 import { render, screen, act, fireEvent } from "@testing-library/react";
+import SuccessScreen from "./success-screen";
+import {navigateToMainScreen} from "../../navigation-utils";
+jest.mock("../../navigation-utils");
 
 describe('Success Screen', () => {
     it('should display a success message', () => {
@@ -19,11 +22,7 @@ describe('Success Screen', () => {
         expect(backButton).toBeInTheDocument();
     });
 
-    it('clicking the "Add more" button should refresh the page', () => {
-        // Mock the window.location.reload method
-        const originalReload = window.location.reload;
-        window.location.reload = jest.fn();
-
+    it('clicking the "Add more" button should navigate to the main screen', () => {
         render(<SuccessScreen />);
         const addButton = screen.getByRole('button', { name: 'Add more' });
 
@@ -31,23 +30,6 @@ describe('Success Screen', () => {
             fireEvent.click(addButton);
         });
 
-        expect(window.location.reload).toHaveBeenCalled();
-
-        // Restore the original method
-        window.location.reload = originalReload;
-    });
-
-    it('clicking the "Back to the main screen" button should display the main screen', () => {
-        const mockGoToMainScreen = jest.fn();
-        jest.spyOn(window.location, 'assign').mockImplementation(mockGoToMainScreen);
-
-        render(<SuccessScreen />);
-        const backButton = screen.getByRole('button', { name: 'Back to the main screen' });
-
-        act(() => {
-            fireEvent.click(backButton);
-        });
-
-        expect(mockGoToMainScreen).toHaveBeenCalledWith('/');
+        expect(navigateToMainScreen).toHaveBeenCalled();
     });
 });

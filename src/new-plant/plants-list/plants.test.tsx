@@ -1,6 +1,6 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
-import FlowerpotPage from "./FlowerpotPage"; // Replace with the actual component name
+import FlowerpotPage from "./flower-pot"; // Replace with the actual component name
 
 const mockFlowerpots = [
     {
